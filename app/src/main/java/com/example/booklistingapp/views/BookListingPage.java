@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.booklistingapp.R;
 import com.example.booklistingapp.adapters.RecyclerAdapter;
 import com.example.booklistingapp.models.BookInfo;
+import com.example.booklistingapp.models.Rack;
 import com.example.booklistingapp.viewmodels.BookListingPageViewModel;
 
 import android.os.Bundle;
@@ -19,52 +20,29 @@ import java.util.List;
 public class BookListingPage extends AppCompatActivity {
 
     private BookListingPageViewModel mBookListingPageViewModel;
-    private RecyclerView mColumn1;
-    private RecyclerView.Adapter mAdapter1;
-    private RecyclerView mColumn2;
-    private RecyclerView.Adapter mAdapter2;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mColumn1 = findViewById(R.id.recyclerView1);
-        mColumn2 = findViewById(R.id.recyclerView2);
+        mRecyclerView = findViewById(R.id.recyclerView);
         mBookListingPageViewModel = ViewModelProviders.of(this).get(BookListingPageViewModel.class);
         mBookListingPageViewModel.init(getApplicationContext());
-        initRecyclerViews();
-        mBookListingPageViewModel.getAllBooksColumn1().observe(this, new Observer<List<BookInfo>>() {
+        initRecyclerView();
+        mBookListingPageViewModel.getAllRacks().observe(this, new Observer<List<Rack>>() {
            @Override
-            public void onChanged(@Nullable List<BookInfo> bookInfo) {
-                mAdapter1.notifyDataSetChanged();
-            }
-        });
-        mBookListingPageViewModel.getAllBooksColumn2().observe(this, new Observer<List<BookInfo>>() {
-            @Override
-            public void onChanged(@Nullable List<BookInfo> bookInfo) {
-                mAdapter2.notifyDataSetChanged();
+            public void onChanged(@Nullable List<Rack> allRacks) {
+                mAdapter.notifyDataSetChanged();
             }
         });
     }
 
-    private void initRecyclerViews() {
-        mAdapter1 = new RecyclerAdapter(this, mBookListingPageViewModel.getAllBooksColumn1().getValue());
-        RecyclerView.LayoutManager linearLayoutManager1 = new LinearLayoutManager(this){
-            @Override
-            public boolean canScrollVertically(){
-                return false;
-            }
-        };
-        mColumn1.setLayoutManager(linearLayoutManager1);
-        mColumn1.setAdapter(mAdapter1);
-        mAdapter2 = new RecyclerAdapter(this, mBookListingPageViewModel.getAllBooksColumn2().getValue());
-        RecyclerView.LayoutManager linearLayoutManager2 = new LinearLayoutManager(this){
-            @Override
-            public boolean canScrollVertically(){
-                return false;
-            }
-        };
-        mColumn2.setLayoutManager(linearLayoutManager2);
-        mColumn2.setAdapter(mAdapter2);
+    private void initRecyclerView() {
+        mAdapter = new RecyclerAdapter(this, mBookListingPageViewModel.getAllRacks().getValue());
+        RecyclerView.LayoutManager linearLayoutManager1 = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(linearLayoutManager1);
+        mRecyclerView.setAdapter(mAdapter);
     }
 }

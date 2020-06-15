@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.booklistingapp.R;
 import com.example.booklistingapp.models.BookInfo;
+import com.example.booklistingapp.models.Rack;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -25,11 +26,11 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<BookInfo> mAllBooks = new ArrayList<>();
+    private List<Rack> mAllRacks = new ArrayList<>();
     private Context mContext;
 
-    public RecyclerAdapter(Context context, List<BookInfo> allBooks) {
-        mAllBooks = allBooks;
+    public RecyclerAdapter(Context context, List<Rack> allRacks) {
+        mAllRacks = allRacks;
         mContext = context;
     }
 
@@ -44,13 +45,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
         try {
-            // Set the name of the 'BookInfo'
-            ((ViewHolder)viewHolder).mTextView.setText(mAllBooks.get(i).getTitle());
+            // Set the titles of the books
+            if(mAllRacks.get(i).getBookOne() != null)
+                ((ViewHolder)viewHolder).mTextView1.setText(mAllRacks.get(i).getBookOne().getTitle());
+            if(mAllRacks.get(i).getBookTwo() != null)
+                ((ViewHolder)viewHolder).mTextView2.setText(mAllRacks.get(i).getBookTwo().getTitle());
 
-            // Set the image
-            InputStream ims = mContext.getAssets().open(mAllBooks.get(i).getCover());
-            Drawable d = Drawable.createFromStream(ims, null);
-            ((ViewHolder)viewHolder).mImage.setImageDrawable(d);
+            // Set the images
+            if(mAllRacks.get(i).getBookOne() != null) {
+                InputStream ims1 = mContext.getAssets().open(mAllRacks.get(i).getBookOne().getCover());
+                Drawable d1 = Drawable.createFromStream(ims1, null);
+                ((ViewHolder) viewHolder).mImage1.setImageDrawable(d1);
+            }
+            if(mAllRacks.get(i).getBookTwo() != null) {
+                InputStream ims2 = mContext.getAssets().open(mAllRacks.get(i).getBookTwo().getCover());
+                Drawable d2 = Drawable.createFromStream(ims2, null);
+                ((ViewHolder) viewHolder).mImage2.setImageDrawable(d2);
+            }
         }
         catch(Exception ex)
         {
@@ -60,18 +71,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return mAllBooks.size();
+        return mAllRacks.size();
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder{
 
-        private ImageView mImage;
-        private TextView mTextView;
+        private ImageView mImage1;
+        private TextView mTextView1;
+        private ImageView mImage2;
+        private TextView mTextView2;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mImage = itemView.findViewById(R.id.bookCover);
-            mTextView = itemView.findViewById(R.id.bookTitle);
+            mImage1 = itemView.findViewById(R.id.bookCover1);
+            mTextView1 = itemView.findViewById(R.id.bookTitle1);
+            mImage2 = itemView.findViewById(R.id.bookCover2);
+            mTextView2 = itemView.findViewById(R.id.bookTitle2);
         }
     }
 }
