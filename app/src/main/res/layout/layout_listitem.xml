@@ -24,14 +24,6 @@
             android:id="@+id/bookCover1"
             android:src="@mipmap/ic_launcher"
             android:layout_marginRight="20dp" />
-        <TextView
-            android:visibility="gone"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:id="@+id/bookTitle1"
-            android:textColor="#000"/>
         <ImageView
             android:layout_marginStart="20dp"
             android:layout_weight="0.5"
@@ -40,14 +32,6 @@
             android:id="@+id/bookCover2"
             android:src="@mipmap/ic_launcher"
             android:layout_marginLeft="20dp" />
-        <TextView
-            android:visibility="gone"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:id="@+id/bookTitle2"
-            android:textColor="#000"/>
     </LinearLayout>
 
     <ImageView

@@ -2,22 +2,16 @@ package com.example.booklistingapp.adapters;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Application;
 import android.content.Context;
 import androidx.annotation.NonNull;
 
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.booklistingapp.R;
-import com.example.booklistingapp.models.BookInfo;
 import com.example.booklistingapp.models.Rack;
 
 import java.io.InputStream;
@@ -27,6 +21,8 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Rack> mAllRacks = new ArrayList<>();
+    private ImageView mImageView1;
+    private ImageView mImageView2;
     private Context mContext;
 
     public RecyclerAdapter(Context context, List<Rack> allRacks) {
@@ -37,7 +33,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_listitem, viewGroup, false);
-        ViewHolder vh = new ViewHolder(view);
+        final ViewHolder vh = new ViewHolder(view);
+        final int currentInt = i;
+        mImageView1 = view.findViewById(R.id.bookCover1);
+        mImageView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int index = mAllRacks.get(vh.getAdapterPosition()).getBookOne().getIndex();
+                //Popup dialog for book.
+            }
+        });
+        mImageView2 = view.findViewById(R.id.bookCover2);
+        mImageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int index = mAllRacks.get(vh.getAdapterPosition()).getBookTwo().getIndex();
+                //Popup dialog for book.
+            }
+        });
         return vh;
     }
 
@@ -45,12 +58,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
         try {
-            // Set the titles of the books
-            if(mAllRacks.get(i).getBookOne() != null)
-                ((ViewHolder)viewHolder).mTextView1.setText(mAllRacks.get(i).getBookOne().getTitle());
-            if(mAllRacks.get(i).getBookTwo() != null)
-                ((ViewHolder)viewHolder).mTextView2.setText(mAllRacks.get(i).getBookTwo().getTitle());
-
             // Set the images
             if(mAllRacks.get(i).getBookOne() != null) {
                 InputStream ims1 = mContext.getAssets().open(mAllRacks.get(i).getBookOne().getCover());
@@ -77,16 +84,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private class ViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView mImage1;
-        private TextView mTextView1;
         private ImageView mImage2;
-        private TextView mTextView2;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mImage1 = itemView.findViewById(R.id.bookCover1);
-            mTextView1 = itemView.findViewById(R.id.bookTitle1);
             mImage2 = itemView.findViewById(R.id.bookCover2);
-            mTextView2 = itemView.findViewById(R.id.bookTitle2);
         }
     }
 }
