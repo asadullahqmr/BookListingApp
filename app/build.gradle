@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        asadtest {
+            storeFile file('C:\\Users\\Asad\\Desktop\\Job Applications\\Xentral Methods\\keystore.jks')
+            storePassword '123456'
+            keyPassword '123456'
+            keyAlias = 'Asadullah Qamar'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.booklistingapp"
@@ -9,6 +17,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.asadtest
     }
     buildTypes {
         release {
