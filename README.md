@@ -1,1 +1,1 @@
-This is a basic Android application that makes use of MVVM to display a book list based on a JSON file.
+This is a basic Android application that makes use of MVVM to display a book list based on a JSON file. You access the .apk for the app at https://drive.google.com/file/d/1Yol5r7VNZnWnyC3TAu3ZMTBL2StTpS29/view?usp=sharing
